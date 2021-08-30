@@ -30,26 +30,21 @@ def stats(update, context):
     recv = get_readable_file_size(psutil.net_io_counters().bytes_recv)
     cpuUsage = psutil.cpu_percent(interval=0.5)
     cpuCount = psutil.cpu_count()
-    cpuCurFreq = psutil.cpu_freq().current
-    cpuMinFreq = psutil.cpu_freq().min
-    cpuMaxFreq = psutil.cpu_freq().max
     memory = psutil.virtual_memory().percent
     totalMemory = psutil.virtual_memory().total
+    totalMemory = get_readable_file_size(totalMemory)
     disk = psutil.disk_usage('/').percent
     stats = f'<b>Bot Uptime:</b> <code>{currentTime}</code>\n' \
             f'<b>Total Disk Space:</b> <code>{total}</code>\n' \
             f'<b>Total RAM Size:</b> <code>{totalMemory}</code>\n' \
+            f'<b>Total CPU Core:</b> <code>{cpuCount}</code>\n' \
             f'<b>Used:</b> <code>{used}</code> ' \
             f'<b>Free:</b> <code>{free}</code>\n\n' \
             f'<b>Upload:</b> <code>{sent}</code>\n' \
             f'<b>Download:</b> <code>{recv}</code>\n\n' \
             f'<b>CPU:</b> <code>{cpuUsage}%</code> ' \
             f'<b>RAM:</b> <code>{memory}%</code> ' \
-            f'<b>DISK:</b> <code>{disk}%</code>\n' \
-            f'<b>CORE:</b> <code>{cpuCount}%</code> ' \
-            f'<b>CUR:</b> <code>{cpuCurFreq}%</code> ' \
-            f'<b>MIN:</b> <code>{cpuMinFreq}%</code> ' \
-            f'<b>MAX:</b> <code>{cpuMaxFreq}%</code>'
+            f'<b>DISK:</b> <code>{disk}%</code>\n'
     sendMessage(stats, context.bot, update)
 
 
